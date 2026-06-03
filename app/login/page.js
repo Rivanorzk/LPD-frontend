@@ -3,15 +3,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useCallback } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { jwtDecode } from "jwt-decode"
 import { loginUser, saveAuth } from "@/lib/auth"
 
-export const dynamic = "force-dynamic";
-
 export default function LoginPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [formData, setFormData] = useState({
     username: "",
     password: ""
@@ -19,13 +16,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [successMessage] = useState(() => {
-  if (typeof window === "undefined") return ""
-
-  return new URLSearchParams(window.location.search).get("registered") === "true"
-    ? "Registrasi berhasil! Silakan login dengan akun Anda."
-    : ""
-})
 
   const validateForm = useCallback(() => {
     const { username, password } = formData
@@ -58,9 +48,8 @@ export default function LoginPage() {
     setFormData(prev => ({ ...prev, [name]: value }))
     // Clear error when user starts typing
     if (error) setError("")
-    if (successMessage) setSuccessMessage("")
-  }, [error, successMessage])
-
+  }, [error])
+ 
   const handleLogin = useCallback(async (e) => {
     e.preventDefault()
     
@@ -141,16 +130,6 @@ export default function LoginPage() {
 
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-5">
-              {/* Success Alert */}
-              {successMessage && (
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2">
-                  <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{successMessage}</span>
-                </div>
-              )}
-
               {/* Error Alert */}
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2">
