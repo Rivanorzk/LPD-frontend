@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+/* ── Page wrapper ── */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+/* ── Navbar ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #004643;
+  padding: 0 59px;
+  height: 111px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-brand {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.login-btn {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.login-btn:hover {
+  background: #fff;
+  color: #004643;
+}
+
+/* ── Hero images ── */
+.hero-section {
+  padding: 40px 22px;
+  background: #fafafa;
+}
+
+.hero-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.hero-img-placeholder {
+  background: #d9d9d9;
+  border-radius: 8px;
+  height: 290px;
+}
+
+/* ── Shared dark section ── */
+.dark-section {
+  background: #2c2c2c;
+  padding: 56px 74px;
+}
+
+.visi-section {
+  margin-top: 48px;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 28px 0;
+}
+
+.section-body {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 979px;
+}
+
+.visi-body {
+  max-width: 792px;
+}
+
+/* ── Fitur Utama ── */
+.features-section {
+  padding: 72px 24px;
+  background: #fafafa;
+}
+
+.features-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 40px 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #2c2c2c;
+  border-radius: 8px;
+  padding: 40px 40px;
+  min-height: 360px;
+}
+
+.feature-name {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 40px 0;
+}
+
+.feature-desc {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Why section ── */
+.why-section {
+  background: #2c2c2c;
+  padding: 56px 74px;
+  margin-top: 48px;
+}
+
+.why-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1280px;
+}
+
+.why-text {
+  flex: 1;
+  max-width: 583px;
+}
+
+.why-body {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.why-body:last-child {
+  margin-bottom: 0;
+}
+
+.why-image {
+  flex-shrink: 0;
+}
+
+.why-illustration {
+  width: 348px;
+  height: 348px;
+  object-fit: contain;
+}
+
+/* ── Footer ── */
+.footer {
+  background: #004643;
+  padding: 80px 74px;
+  margin-top: 48px;
+  flex: 1;
+}
+
+.footer-cta {
+  color: #fff;
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+
+.footer-social-heading {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 48px 0;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+}
+
+.social-handle {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+    height: 72px;
+  }
+
+  .navbar-brand {
+    font-size: 16px;
+  }
+
+  .hero-images {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-img-placeholder {
+    height: 200px;
+  }
+
+  .dark-section {
+    padding: 40px 24px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .section-body {
+    font-size: 16px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    min-height: auto;
+    padding: 28px 24px;
+  }
+
+  .why-section {
+    padding: 40px 24px;
+  }
+
+  .why-content {
+    flex-direction: column;
+  }
+
+  .why-illustration {
+    width: 100%;
+    height: auto;
+  }
+
+  .why-body {
+    font-size: 16px;
+  }
+
+  .footer {
+    padding: 48px 24px;
+  }
+
+  .footer-cta {
+    font-size: 28px;
+  }
+
+  .footer-social-heading {
+    font-size: 22px;
+  }
+}
