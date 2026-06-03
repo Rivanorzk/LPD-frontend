@@ -153,7 +153,7 @@ useEffect(() => {
             {report.image && (
 
               <img
-                src={`http://localhost:4000/uploads/${report.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report.image}`}
                 alt={report.header}
                 className="w-full h-[220px] sm:h-[280px] lg:h-[300px] object-cover"
               />

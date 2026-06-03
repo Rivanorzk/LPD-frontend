@@ -620,7 +620,7 @@ export default function ReportsPage() {
           {selectedReport.image && (
 
             <img
-              src={`http://localhost:4000/uploads/${selectedReport.image}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${selectedReport.image}`}
               alt="report"
               className="w-full h-[220px] lg:h-[350px] object-cover rounded-[28px] mb-8"
             />

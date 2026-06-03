@@ -166,7 +166,7 @@ export default function ProfilePage() {
         )
 
       const imageUrl =
-        `http://localhost:4000/uploads/${response.data.image}?t=${Date.now()}`
+        `${process.env.NEXT_PUBLIC_API_URL}/uploads/${response.data.image}?t=${Date.now()}`
 
       setPreviewImage(
         imageUrl
@@ -377,7 +377,7 @@ return (
                     <img
                       src={
                         previewImage ||
-                        `http://localhost:4000/uploads/${user?.image}`
+                        `${process.env.NEXT_PUBLIC_API_URL}/uploads/${user?.image}`
                       }
                       alt="Profile"
                       className="
@@ -1073,7 +1073,7 @@ return (
                           {report.image && (
 
                             <img
-                              src={`http://localhost:4000/uploads/${report.image}`}
+                              src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report.image}`}
                               alt={report.header}
                               className="
                                 w-full

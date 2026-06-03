@@ -336,7 +336,7 @@ useEffect(() => {
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#DFF6F3] overflow-hidden flex items-center justify-center text-2xl sm:text-3xl">
                 {user?.image ? (
                     <img
-                      src={`http://localhost:4000/uploads/${user.image}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${user.image}`}
                       alt="Profile"
                       className="
                         w-full

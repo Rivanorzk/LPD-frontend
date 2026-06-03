@@ -17,11 +17,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [successMessage, setSuccessMessage] = useState(() =>
-          searchParams.get("registered") === "true"
-            ? "Registrasi berhasil! Silakan login dengan akun Anda."
-            : ""
-        )
+  const [successMessage] = useState(() => {
+  if (typeof window === "undefined") return ""
+
+  return new URLSearchParams(window.location.search).get("registered") === "true"
+    ? "Registrasi berhasil! Silakan login dengan akun Anda."
+    : ""
+})
 
   const validateForm = useCallback(() => {
     const { username, password } = formData

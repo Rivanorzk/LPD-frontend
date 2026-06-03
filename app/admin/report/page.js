@@ -240,7 +240,7 @@ export default function ReportPage() {
             {report.image && (
 
               <img
-                src={`http://localhost:4000/uploads/${report.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report.image}`}
                 alt={report.header}
                 className="w-full h-[180px] sm:h-[220px] object-cover"
               />
@@ -294,7 +294,7 @@ export default function ReportPage() {
                       {report?.profile_image ? (
 
                         <img
-                          src={`http://localhost:4000/uploads/${report.profile_image}`}
+                          src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report.profile_image}`}
                           alt="Profile"
                           className="w-full h-full object-cover"
                         />
