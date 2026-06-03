@@ -23,6 +23,8 @@ import {
 
 import api from "@/lib/api"
 
+export const dynamic = "force-dynamic";
+
 export default function Navbar() {
 
   const pathname =

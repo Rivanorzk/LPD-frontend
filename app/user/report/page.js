@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import dynamic from "next/dynamic"
+import nextDynamic from "next/dynamic"
 import api from "@/lib/api" 
-import Navbar from "@/components/Navbar"
 
-const LocationPicker = dynamic(
+export const dynamic = "force-dynamic";
+
+const LocationPicker = nextDynamic(
   () => import("@/components/LocationPicker"),
   {
     ssr: false,
