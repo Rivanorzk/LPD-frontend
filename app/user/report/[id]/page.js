@@ -218,7 +218,7 @@ export default function ReportDetailPage() {
                 {report?.profile_image ? (
 
                   <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report?.profile_image}`}
+                    src={report?.profile_image}
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
@@ -314,7 +314,7 @@ export default function ReportDetailPage() {
           <div className="px-5 sm:px-6 lg:px-8 pb-5 sm:pb-6 lg:pb-8">
 
             <img
-              src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report?.image}`}
+              src={report?.image}
               alt={report.header}
               className="w-full h-[220px] sm:h-[350px] lg:h-[550px] object-cover rounded-[24px] lg:rounded-[32px] border border-slate-100"
             />
@@ -482,7 +482,7 @@ export default function ReportDetailPage() {
                     {item?.image ? (
 
                       <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${item?.image}`}
+                        src={item?.image}
                         alt="Profile"
                         className="w-full h-full object-cover"
                       />

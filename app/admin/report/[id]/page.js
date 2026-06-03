@@ -184,7 +184,7 @@ export default function AdminReportDetailPage() {
       {report?.image && (
 
         <img
-          src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report.image}`}
+          src={report.image}
           alt={report.header}
           className="w-full h-[220px] sm:h-[350px] lg:h-[450px] object-cover"
         />
@@ -225,7 +225,7 @@ export default function AdminReportDetailPage() {
                 {report?.profile_image ? (
 
                   <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${report?.profile_image}`}
+                    src={report?.profile_image}
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
@@ -438,7 +438,7 @@ export default function AdminReportDetailPage() {
                   {item?.image ? (
 
                     <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${item?.image}`}
+                      src={item?.image}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />

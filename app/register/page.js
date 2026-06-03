@@ -36,12 +36,10 @@ export default function RegisterPage() {
     // Password validation
     if (!password) {
       newErrors.password = "Password tidak boleh kosong"
-    } else if (password.length < 8) {
-      newErrors.password = "Password minimal 8 karakter"
+    } else if (password.length < 4) {
+      newErrors.password = "Password minimal 4 karakter"
     } else if (password.length > 100) {
       newErrors.password = "Password maksimal 100 karakter"
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(password)) {
-      newErrors.password = "Password harus mengandung huruf besar, huruf kecil, dan angka"
     }
 
     // Confirm password validation
@@ -165,7 +163,7 @@ export default function RegisterPage() {
                     id="username"
                     name="username"
                     type="text"
-                    placeholder="contoh: john_doe"
+                    placeholder="Masukkan username"
                     value={formData.username}
                     onChange={handleInputChange}
                     aria-invalid={!!errors.username}
@@ -262,7 +260,7 @@ export default function RegisterPage() {
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Gunakan minimal 8 karakter dengan kombinasi huruf besar, huruf kecil, dan angka
+                      Gunakan minimal 4 karakter dengan kombinasi huruf besar, huruf kecil, dan angka
                     </p>
                   </div>
                 )}

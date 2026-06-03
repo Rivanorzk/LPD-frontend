@@ -165,8 +165,7 @@ export default function ProfilePage() {
           }
         )
 
-      const imageUrl =
-        `${process.env.NEXT_PUBLIC_API_URL}/uploads/${response.data.image}?t=${Date.now()}`
+      const imageUrl = response.data.image
 
       setPreviewImage(
         imageUrl
@@ -377,7 +376,7 @@ return (
                     <img
                       src={
                         previewImage ||
-                        `${process.env.NEXT_PUBLIC_API_URL}/uploads/${user?.image}`
+                        user?.image
                       }
                       alt="Profile"
                       className="

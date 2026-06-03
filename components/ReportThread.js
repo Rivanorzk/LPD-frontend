@@ -97,7 +97,7 @@ export default function ReportThread({
                 <div className="w-16 h-16 rounded-full bg-[#DFF6F3] overflow-hidden flex items-center justify-center text-3xl">
                     {report?.profile_image ? (
                       <img
-                        src={`http://localhost:4000/uploads/${report?.profile_image}`}
+                        src={report?.profile_image}
                         alt="Profile"
                         className="w-full h-full object-cover"
                       />
@@ -157,7 +157,7 @@ export default function ReportThread({
 
             {report.image && (
               <img
-                src={`http://localhost:4000/uploads/${report.image}`}
+                src={report.image}
                 alt={report.header}
                 className="w-full h-[420px] object-cover rounded-3xl border border-slate-100"
               />
