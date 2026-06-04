@@ -264,7 +264,7 @@ const sendMessage =
 }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-10 overflow-hidden">
+    <div className="overflow-hidden">
 
       {/* HEADER */}
       <div
