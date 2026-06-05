@@ -41,7 +41,7 @@ export default function ReportsPage() {
 
       const response =
         await api.get(
-          "http://localhost:4000/report",
+          "/report",
           {
             headers: {
               Authorization:

@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   XCircle,
   FileText,
+  Trash2,
 } from "lucide-react"
 import api from "@/lib/api"
 
@@ -43,7 +44,7 @@ export default function AdminReportDetailPage() {
             ),
 
             api.get(
-              `/comment/${params.id}`,
+              `/comment/report/${params.id}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -131,6 +132,40 @@ export default function AdminReportDetailPage() {
   } catch (error) {
     console.log(error)
     alert("Gagal export PDF")
+  }
+}
+
+const handleDeleteReport = async () => {
+  const confirmed = window.confirm(
+    "Yakin ingin menghapus laporan ini?"
+  )
+
+  if (!confirmed) return
+
+  try {
+    const token =
+      localStorage.getItem("token")
+
+    await api.delete(
+      `/report/${report.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+
+    alert("Laporan berhasil dihapus")
+
+    router.push("/admin/report")
+
+  } catch (error) {
+    console.log(error)
+
+    alert(
+      error?.response?.data?.message ||
+      "Gagal menghapus laporan"
+    )
   }
 }
 
@@ -380,6 +415,14 @@ export default function AdminReportDetailPage() {
 
             Export PDF
 
+          </button>
+
+          <button
+            onClick={handleDeleteReport}
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-7 py-4 rounded-2xl font-semibold transition flex items-center justify-center gap-2"
+          >
+            <Trash2 size={20} />
+            Hapus Laporan
           </button>
 
           <button

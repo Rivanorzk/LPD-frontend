@@ -200,7 +200,7 @@ export default function RegisterPage() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Minimal 8 karakter"
+                    placeholder="Minimal 4 karakter"
                     value={formData.password}
                     onChange={handleInputChange}
                     aria-invalid={!!errors.password}

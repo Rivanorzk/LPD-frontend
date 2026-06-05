@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import nextDynamic from "next/dynamic"
 import api from "@/lib/api" 
+import { Heart, MessageCircle } from "lucide-react"
 
 export const dynamic = "force-dynamic";
 
@@ -296,34 +297,24 @@ useEffect(() => {
             Upload Foto
           </label>
 
-          <label className="border-2 border-dashed border-slate-300 rounded-3xl p-6 lg:p-10 flex flex-col items-center justify-center text-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
-            <div className="text-5xl mb-4">📸</div>
+          <label className="border-2 border-dashed border-slate-300 rounded-3xl overflow-hidden bg-slate-50 hover:bg-slate-100 transition cursor-pointer block">
+            {preview ? (
+              <div className="relative">
+                <img src={preview} alt="Preview" className="w-full h-[250px] lg:h-[350px] object-cover" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex items-center justify-center text-white font-semibold">
+                  Ganti Foto
+                </div>
+              </div>
+            ) : (
+              <div className="p-6 lg:p-10 flex flex-col items-center justify-center text-center">
+                <div className="text-5xl mb-4">📸</div>
+                <p className="font-semibold text-slate-700 text-lg">Klik untuk upload foto laporan</p>
+                <p className="text-slate-500 mt-2 text-sm">PNG, JPG, JPEG</p>
+              </div>
+            )}
 
-            <p className="font-semibold text-slate-700 text-lg">
-              Klik untuk upload foto laporan
-            </p>
-
-            <p className="text-slate-500 mt-2 text-sm">
-              PNG, JPG, JPEG
-            </p>
-
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImage}
-              className="hidden"
-            />
+            <input type="file" accept="image/*" onChange={handleImage} className="hidden" />
           </label>
-
-          {preview && (
-            <div className="mt-6">
-              <img
-                src={preview}
-                alt="Preview"
-                className="w-full max-w-xl h-[220px] lg:h-[300px] object-cover rounded-3xl shadow-sm"
-              />
-            </div>
-          )}
         </div>
 
         {/* PREVIEW THREAD */}
@@ -383,17 +374,15 @@ useEffect(() => {
               />
             )}
 
-            <div className="flex flex-wrap gap-4 lg:gap-6 text-slate-500 border-t pt-5">
-              <button type="button" className="hover:text-teal-700 transition">
-                👍 0 Dukungan
+            <div className="flex items-center gap-6 text-slate-500 border-t pt-5">
+              <button type="button" className="flex items-center gap-2 hover:text-teal-700 transition">
+                <Heart className="w-5 h-5" />
+                <span>0 like</span>
               </button>
 
-              <button type="button" className="hover:text-teal-700 transition">
-                💬 0 Komentar
-              </button>
-
-              <button type="button" className="hover:text-teal-700 transition">
-                🔗 Bagikan
+              <button type="button" className="flex items-center gap-2 hover:text-teal-700 transition">
+                <MessageCircle className="w-5 h-5" />
+                <span>0 komentar</span>
               </button>
             </div>
           </div>

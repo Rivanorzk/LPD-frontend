@@ -186,8 +186,24 @@ useEffect(() => {
 
                   <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-5 mt-5 text-slate-500">
 
-                    <div>
-                      👤 {report.username}
+                    <div className="flex items-center gap-3">
+
+                      <div className="w-10 h-10 rounded-full bg-[#DFF6F3] overflow-hidden flex items-center justify-center shrink-0">
+
+                        {report.profile_image ? (
+                          <img
+                            src={report.profile_image}
+                            alt={report.username}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-lg">👤</span>
+                        )}
+
+                      </div>
+
+                      <span>{report.username}</span>
+
                     </div>
 
                     <div className="flex items-center gap-2">
