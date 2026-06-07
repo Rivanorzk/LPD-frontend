@@ -46,7 +46,45 @@ export default function CategoriesPage() {
   }, [])
 
   if (loading) {
-    return (
+  return (
+    <div className="max-w-7xl mx-auto">
+
+      {/* HEADER */}
+      <div className="bg-gradient-to-r from-[#004D4D] to-[#006666] rounded-[32px] p-6 lg:p-10 text-white shadow-xl mb-10">
+        <h1 className="text-3xl lg:text-5xl font-black">
+          Semua Kategori
+        </h1>
+
+        <p className="text-white/80 mt-4 text-base lg:text-lg">
+          Pilih kategori laporan sesuai masalah yang ingin Anda laporkan.
+        </p>
+      </div>
+
+      {/* SKELETON */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-[32px] p-5 lg:p-8 shadow-sm animate-pulse"
+          >
+            <div className="w-20 h-20 rounded-3xl bg-slate-200 mb-6" />
+
+            <div className="h-6 bg-slate-200 rounded mb-4" />
+
+            <div className="h-4 bg-slate-200 rounded mb-2" />
+
+            <div className="h-4 bg-slate-200 rounded w-3/4 mb-6" />
+
+            <div className="h-12 bg-slate-200 rounded-2xl" />
+          </div>
+        ))}
+      </div>
+
+    </div>
+  )
+}
+
+return (
   <div className="max-w-7xl mx-auto">
 
     {/* HEADER */}
@@ -104,8 +142,8 @@ export default function CategoriesPage() {
           </div>
         )
       })}
+
     </div>
 
   </div>
-)
-}}
+)}
