@@ -55,7 +55,7 @@ export default function ReportThread({
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Diproses":
+      case "Dalam proses":
         return "bg-yellow-100 text-yellow-700"
 
       case "Selesai":

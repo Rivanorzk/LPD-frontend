@@ -167,9 +167,7 @@ export default function ManageUsersPage() {
     users.filter((item) =>
       item.username
         ?.toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
+        .startsWith(search.trim().toLowerCase())
     )
 
   const totalUsers =

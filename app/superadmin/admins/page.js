@@ -130,14 +130,11 @@ export default function ManageAdminPage() {
       }
     }
 
-  const filteredAdmins =
-    admins.filter((item) =>
-      item.username
-        ?.toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
-    )
+  const filteredAdmins = admins.filter((item) =>
+  item.username
+    ?.toLowerCase()
+    .startsWith(search.trim().toLowerCase())
+);
 
   if (loading) {
   return (
