@@ -108,11 +108,6 @@ useEffect(() => {
           }
         )
 
-        localStorage.setItem(
-          "unread_chat",
-          0
-        )
-
         window.dispatchEvent(
           new Event(
             "chat_notification"
@@ -143,36 +138,37 @@ useEffect(() => {
   )
 
     const handleReceiveMessage =
-    (data) => {
+  (data) => {
 
-      const isCurrentChat =
-        (
-          Number(data.sender_id) ===
-            Number(params.id)
+    const isCurrentChat =
+      (
+        Number(data.sender_id) ===
+          Number(params.id)
 
-          &&
+        &&
 
-          Number(data.receiver_id) ===
-            Number(currentUser?.id)
-        )
+        Number(data.receiver_id) ===
+          Number(currentUser?.id)
+      )
 
-        ||
+      ||
 
-        (
-          Number(data.sender_id) ===
-            Number(currentUser?.id)
+      (
+        Number(data.sender_id) ===
+          Number(currentUser?.id)
 
-          &&
+        &&
 
-          Number(data.receiver_id) ===
-            Number(params.id)
-        )
+        Number(data.receiver_id) ===
+          Number(params.id)
+      )
 
-      if (!isCurrentChat) {
-        return
-      }
+    if (!isCurrentChat) {
+      return
+    }
 
-      setMessages((prev) => {
+    setMessages((prev) => {
+
       const exists =
         prev.some(
           (item) =>
@@ -180,14 +176,41 @@ useEffect(() => {
             Number(data.id)
         )
 
-        if (exists) return prev
+      if (exists) return prev
 
-        return [
-          ...prev,
-          data,
-        ]
-      })
+      return [
+        ...prev,
+        data,
+      ]
+    })
+
+    if (
+      Number(data.sender_id) ===
+      Number(params.id)
+    ) {
+
+      api.patch(
+        `/chat/read/${params.id}`,
+        {},
+        {
+          headers: {
+            Authorization:
+              `Bearer ${
+                localStorage.getItem(
+                  "token"
+                )
+              }`,
+          },
+        }
+      )
+
+      window.dispatchEvent(
+        new Event(
+          "chat_notification"
+        )
+      )
     }
+  }
 
 
   socket.on(

@@ -105,13 +105,6 @@ useEffect(() => {
             },
           }
         )
-
-        window.dispatchEvent(
-          new Event(
-            "admin_chat_notification"
-          )
-        )
-
       } catch (error) {
         console.log(error)
       }
@@ -182,6 +175,26 @@ useEffect(() => {
           data,
         ]
       })
+      if (
+        Number(data.sender_id) ===
+        Number(params.id)
+      ) {
+
+        api.patch(
+          `/chat/read/${params.id}`,
+          {},
+          {
+            headers: {
+              Authorization:
+                `Bearer ${
+                  localStorage.getItem(
+                    "token"
+                  )
+                }`,
+            },
+          }
+        )
+      }
     }
 
   socket.on(
@@ -200,8 +213,6 @@ useEffect(() => {
 }, [currentUser,
     params.id
   ])
-
-
 
   useEffect(() => {
 
