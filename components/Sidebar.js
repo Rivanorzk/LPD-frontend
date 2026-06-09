@@ -28,82 +28,76 @@ export default function Sidebar({
 
   useEffect(() => {
 
-   const fetchBadgeData =
-  async () => {
+  const fetchBadgeData =
+    async () => {
 
-    try {
+      try {
 
-      const token =
-        localStorage.getItem(
-          "token"
-        )
+        const token =
+          localStorage.getItem(
+            "token"
+          )
 
-      if (!token) return
+        if (!token) return
 
-      // USER
-          if (role === "user") {
+        // USER
+        if (role === "user") {
 
-            const response =
-              await api.get(
-                "/notifications",
-                {
-                  headers: {
-                    Authorization:
-                      `Bearer ${token}`,
-                  },
-                }
-              )
-
-            const unread =
-              response.data.filter(
-                (item) =>
-                  !item.is_read
-              ).length
-
-            setUnreadNotif(
-              unread
+          const response =
+            await api.get(
+              "/notifications",
+              {
+                headers: {
+                  Authorization:
+                    `Bearer ${token}`,
+                },
+              }
             )
 
-            return
-          }
+          const unread =
+            response.data.filter(
+              (item) =>
+                !item.is_read
+            ).length
 
-      // ADMIN & SUPERADMIN
-      if (role === "admin") {
+          setUnreadNotif(
+            unread
+          )
 
-      const response =
-        await api.get(
-          "/chat/unread",
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
-          }
-        )
+          return
+        }
 
-      const totalUnread =
-        response.data.reduce(
-          (total, item) =>
-            total +
+        // ADMIN
+        if (role === "admin") {
+
+          const response =
+            await api.get(
+              "/chat/unread/admin",
+              {
+                headers: {
+                  Authorization:
+                    `Bearer ${token}`,
+                },
+              }
+            )
+
+          setUnreadChat(
             Number(
-              item.unread_count || 0
-            ),
-          0
-        )
+              response.data
+                ?.unread_count || 0
+            )
+          )
+        }
 
-      setUnreadChat(
-        totalUnread
-      )
+      } catch (error) {
+
+        console.log(error)
+      }
     }
-      fetchBadgeData()
 
-    } catch (error) {
+  fetchBadgeData()
 
-      console.log(error)
-    }
-  }
-
-    const updateChatBadge =
+  const updateChatBadge =
     () => {
       fetchBadgeData()
     }
@@ -113,30 +107,30 @@ export default function Sidebar({
       fetchBadgeData()
     }
 
-    window.addEventListener(
+  window.addEventListener(
+    "chat_notification",
+    updateChatBadge
+  )
+
+  window.addEventListener(
+    "notifications_changed",
+    updateNotificationBadge
+  )
+
+  return () => {
+
+    window.removeEventListener(
       "chat_notification",
       updateChatBadge
     )
 
-    window.addEventListener(
+    window.removeEventListener(
       "notifications_changed",
       updateNotificationBadge
     )
+  }
 
-    return () => {
-
-      window.removeEventListener(
-        "chat_notification",
-        updateChatBadge
-      )
-
-      window.removeEventListener(
-        "notifications_changed",
-        updateNotificationBadge
-      )
-    }
-
-  }, [role])
+}, [role])
 
   return (
     <aside

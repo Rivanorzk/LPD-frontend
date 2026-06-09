@@ -30,57 +30,98 @@ export default function ChatPage() {
   useEffect(() => {
 
     const fetchUsers =
-      async () => {
+  async () => {
 
-        try {
+    try {
 
-          const token =
-            localStorage.getItem("token")
+      const token =
+        localStorage.getItem(
+          "token"
+        )
 
-          const response =
-            await api.get(
-              "/users/superadmins",
-              {
-                headers: {
-                  Authorization:
-                    `Bearer ${token}`,
-                },
-              }
-            )
+      const [
+        usersResponse,
+        unreadResponse,
+      ] = await Promise.all([
 
-          setUsers(response.data)
+        api.get(
+          "/users/superadmins",
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        ),
 
-          const totalUnread =
-            response.data.reduce(
-              (total, item) =>
-                total +
-                Number(
-                  item.unread_count || 0
-                ),
-              0
-            )
+        api.get(
+          "/chat/unread/admin",
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        ),
 
-          localStorage.setItem(
-            "unread_chat",
-            totalUnread
-          )
+      ])
 
-          window.dispatchEvent(
-            new Event(
-              "chat_notification"
-            )
-          )
+      const unreadMap =
+        unreadResponse.data.reduce(
+          (acc, item) => {
 
-        } catch (error) {
-          console.log(error)
+            acc[
+              item.sender_id
+            ] =
+              item.unread_count
 
-        } finally {
-          setLoading(false)
-        }
-      }
+            return acc
 
-    fetchUsers()
+          },
+          {}
+        )
 
+      const mergedUsers =
+        usersResponse.data.map(
+          (user) => ({
+            ...user,
+
+            unread_count:
+              unreadMap[
+                user.id
+              ] || 0,
+          })
+        )
+
+      setUsers(
+        mergedUsers
+      )
+
+      const totalUnread =
+        mergedUsers.reduce(
+          (total, item) =>
+            total +
+            Number(
+              item.unread_count || 0
+            ),
+          0
+        )
+
+      window.dispatchEvent(
+        new Event(
+          "chat_notification"
+        )
+      )
+
+    } catch (error) {
+
+      console.log(error)
+
+    } finally {
+
+      setLoading(false)
+    }
+  }
   }, [])
 
   const filteredUsers =

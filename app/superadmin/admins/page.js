@@ -24,7 +24,7 @@ export default function ManageAdminPage() {
 )
   const router = useRouter()
 
-    const fetchAdmins =
+ const fetchAdmins =
   useCallback(async () => {
 
     try {
@@ -34,8 +34,11 @@ export default function ManageAdminPage() {
           "token"
         )
 
-      const response =
-        await api.get(
+      const [
+        usersResponse,
+        unreadResponse,
+      ] = await Promise.all([
+        api.get(
           "/users",
           {
             headers: {
@@ -43,17 +46,55 @@ export default function ManageAdminPage() {
                 `Bearer ${token}`,
             },
           }
-        )
+        ),
 
-      const filteredAdmins =
-        response.data.filter(
+        api.get(
+          "/chat/unread/superadmin",
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        ),
+      ])
+
+      const admins =
+        usersResponse.data.filter(
           (item) =>
             item.role ===
             "admin"
         )
 
+      const unreadMap =
+        unreadResponse.data.reduce(
+          (acc, item) => {
+
+            acc[
+              item.sender_id
+            ] =
+              item.unread_count
+
+            return acc
+
+          },
+          {}
+        )
+
+      const mergedAdmins =
+        admins.map(
+          (admin) => ({
+            ...admin,
+
+            unread_count:
+              unreadMap[
+                admin.id
+              ] || 0,
+          })
+        )
+
       setAdmins(
-        filteredAdmins
+        mergedAdmins
       )
 
     } catch (error) {
