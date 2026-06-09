@@ -2,8 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react"
 
-import NavbarSuperAdmin from "@/components/NavbarSuperAdmin"
-
 import {
   ShieldCheck,
   Search,
@@ -26,38 +24,93 @@ export default function ManageAdminPage() {
 )
   const router = useRouter()
 
+    const fetchAdmins =
+  useCallback(async () => {
 
-    const fetchAdmins = useCallback(async () => {
-      try {
-        const token = localStorage.getItem("token")
+    try {
 
-        const response = await api.get(
+      const token =
+        localStorage.getItem(
+          "token"
+        )
+
+      const response =
+        await api.get(
           "/users",
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization:
+                `Bearer ${token}`,
             },
           }
         )
 
-        const filteredAdmins =
-          response.data.filter(
-            (item) => item.role === "admin"
-          )
+      const filteredAdmins =
+        response.data.filter(
+          (item) =>
+            item.role ===
+            "admin"
+        )
 
-        setAdmins(filteredAdmins)
+      setAdmins(
+        filteredAdmins
+      )
 
-      } catch (error) {
-        console.log(error)
+      const totalUnread =
+        filteredAdmins.reduce(
+          (total, admin) =>
+            total +
+            Number(
+              admin.unread_count ||
+              0
+            ),
+          0
+        )
 
-      } finally {
-        setLoading(false)
-      }
-    }, [])
+      localStorage.setItem(
+        "unread_admin_chat",
+        totalUnread
+      )
+
+      window.dispatchEvent(
+        new Event(
+          "admin_chat_notification"
+        )
+      )
+
+    } catch (error) {
+
+      console.log(error)
+
+    } finally {
+
+      setLoading(false)
+    }
+
+  }, [])
+
     useEffect(() => {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      fetchAdmins()
-    }, [fetchAdmins])
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchAdmins()
+
+    const handleFocus =
+      () => {
+        fetchAdmins()
+      }
+
+    window.addEventListener(
+      "focus",
+      handleFocus
+    )
+
+    return () => {
+      window.removeEventListener(
+        "focus",
+        handleFocus
+      )
+    }
+
+  }, [fetchAdmins])
 
   const handleSubmit =
     async (e) => {

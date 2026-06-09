@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import api from "@/lib/api"
-import Navbar from "@/components/Navbar"
 import { useRouter } from "next/navigation"
 import ReportThread from "@/components/ReportThread"
 

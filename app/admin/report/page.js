@@ -14,7 +14,6 @@ import {
 } from "lucide-react"
 
 import { useRouter } from "next/navigation"
-import NavbarAdmin from "@/components/NavbarAdmin"
 import api from "@/lib/api"
 
 export default function ReportPage() {

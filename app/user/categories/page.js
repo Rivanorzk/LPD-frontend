@@ -4,8 +4,6 @@ import { useEffect, useState } from "react"
 import api from "@/lib/api"
 import { useRouter } from "next/navigation"
 
-import Navbar from "@/components/Navbar"
-
 import * as Icons from "lucide-react"
 
 export default function CategoriesPage() {

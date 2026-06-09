@@ -11,8 +11,6 @@ import {
   useParams,
 } from "next/navigation"
 
-import NavbarAdmin from "@/components/NavbarAdmin"
-
 import {
   SendHorizonal,
 } from "lucide-react"

@@ -5,8 +5,6 @@ import {
   useState,
 } from "react"
 
-import NavbarAdmin from "@/components/NavbarAdmin"
-
 import {
   Search,
   MessageCircle,

@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react"
 
-import NavbarSuperAdmin from "@/components/NavbarSuperAdmin"
-
 import {
   Users,
   ShieldCheck,

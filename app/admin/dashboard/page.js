@@ -1,6 +1,5 @@
 "use client"
 
-import NavbarAdmin from "@/components/NavbarAdmin"
 import api from "@/lib/api"
 import {
   FileText,

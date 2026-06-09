@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import api from "@/lib/api"
 import { useParams } from "next/navigation"
-import Navbar from "@/components/Navbar"
 import {
   MapPin,
   Clock3,

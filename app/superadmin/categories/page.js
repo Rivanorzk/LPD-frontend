@@ -4,8 +4,6 @@ import { useEffect, useState } from "react"
 
 import * as Icons from "lucide-react"
 
-import NavbarSuperAdmin from "@/components/NavbarSuperAdmin"
-
 import {
   Clock3,
   FolderKanban,
