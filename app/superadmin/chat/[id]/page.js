@@ -106,6 +106,12 @@ useEffect(() => {
           }
         )
 
+        window.dispatchEvent(
+          new Event(
+            "admin_chat_notification"
+          )
+        )
+
       } catch (error) {
         console.log(error)
       }

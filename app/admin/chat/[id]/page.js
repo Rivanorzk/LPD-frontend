@@ -108,7 +108,6 @@ useEffect(() => {
           }
         )
 
-
         localStorage.setItem(
           "unread_chat",
           0
@@ -207,7 +206,6 @@ useEffect(() => {
 }, [currentUser,
   params.id
 ])
-
 
   useEffect(() => {
 

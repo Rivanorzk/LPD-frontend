@@ -78,6 +78,11 @@ export default function ManageAdminPage() {
         )
       )
 
+      console.log(
+        "totalUnread:",
+        totalUnread
+      )
+
     } catch (error) {
 
       console.log(error)

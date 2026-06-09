@@ -16,7 +16,6 @@ export default function NotificationPage() {
   const [loading, setLoading] =
     useState(true)
 
-
 useEffect(() => {
 
   const fetchNotifications =
@@ -26,7 +25,6 @@ useEffect(() => {
 
         const token =
           localStorage.getItem("token")
-
 
         const response =
           await api.get(
@@ -41,7 +39,6 @@ useEffect(() => {
 
         setNotifications(response.data)
 
-
         await api.patch(
           "/notifications/read",
           {},
@@ -52,6 +49,12 @@ useEffect(() => {
             },
           }
         )
+
+        window.dispatchEvent(
+            new Event(
+              "notifications_changed"
+            )
+          )
 
       } catch (error) {
         console.log(error)

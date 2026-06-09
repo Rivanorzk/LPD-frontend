@@ -23,108 +23,84 @@ export default function Sidebar({
     useState(0)
 
   const [unreadChat,
-    setUnreadChat] =
-    useState(() => {
-
-      if (
-        typeof window ===
-        "undefined"
-      ) {
-        return 0
-      }
-
-      return Number(
-        localStorage.getItem(
-          "unread_chat"
-        ) || 0
-      )
-    })
+  setUnreadChat] =
+  useState(0)
 
   const [unreadAdminChat,
-    setUnreadAdminChat] =
-    useState(() => {
-
-      if (
-        typeof window ===
-        "undefined"
-      ) {
-        return 0
-      }
-
-      return Number(
-        localStorage.getItem(
-          "unread_admin_chat"
-        ) || 0
-      )
-    })
+  setUnreadAdminChat] =
+  useState(0)
 
   useEffect(() => {
 
-    const fetchBadgeData =
-      async () => {
+   const fetchBadgeData =
+  async () => {
 
-      try {
+    try {
 
-        const token =
-          localStorage.getItem(
-            "token"
+      const token =
+        localStorage.getItem(
+          "token"
+        )
+
+      if (!token) return
+
+      // USER
+      if (role === "user") {
+
+        const response =
+          await api.get(
+            "/notifications",
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
           )
 
-        if (!token) return
+        const unread =
+          response.data.filter(
+            (item) =>
+              !item.is_read
+          ).length
 
-        if (role === "user") {
+        setUnreadNotif(
+          unread
+        )
 
-          const response =
-            await api.get(
-              "/notifications",
-              {
-                headers: {
-                  Authorization:
-                    `Bearer ${token}`,
-                },
-              }
-            )
+        return
+      }
 
-          const unread =
-            response.data.filter(
-              (item) =>
-                !item.is_read
-            ).length
+      // ADMIN & SUPERADMIN
+      if (
+        role === "admin" ||
+        role === "superadmin"
+      ) {
 
-          setUnreadNotif(
-            unread
+        const response =
+          await api.get(
+            "/chat/unread",
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
           )
-        }
+
+        const totalUnread =
+          response.data.reduce(
+            (total, item) =>
+              total +
+              Number(
+                item.unread_count || 0
+              ),
+            0
+          )
 
         if (role === "admin") {
 
-          const response =
-            await api.get(
-              "/users/superadmins",
-              {
-                headers: {
-                  Authorization:
-                    `Bearer ${token}`,
-                },
-              }
-            )
-
-          const totalUnread =
-            response.data.reduce(
-              (total, item) =>
-                total +
-                Number(
-                  item.unread_count || 0
-                ),
-              0
-            )
-
           setUnreadChat(
-            totalUnread
-          )
-
-          localStorage.setItem(
-            "unread_chat",
             totalUnread
           )
         }
@@ -134,84 +110,32 @@ export default function Sidebar({
           "superadmin"
         ) {
 
-          const response =
-            await api.get(
-              "/users",
-              {
-                headers: {
-                  Authorization:
-                    `Bearer ${token}`,
-                },
-              }
-            )
-
-          const admins =
-            response.data.filter(
-              (item) =>
-                item.role ===
-                "admin"
-            )
-
-          const totalUnread =
-            admins.reduce(
-              (
-                total,
-                admin
-              ) =>
-                total +
-                Number(
-                  admin.unread_count ||
-                  0
-                ),
-              0
-            )
-
           setUnreadAdminChat(
             totalUnread
           )
-
-          localStorage.setItem(
-            "unread_admin_chat",
-            totalUnread
-          )
         }
-
-      } catch (error) {
-
-        console.log(error)
       }
-    }
+      fetchBadgeData()
 
-    fetchBadgeData()
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
 
     const updateChatBadge =
-      () => {
-
-      const latest =
-        Number(
-          localStorage.getItem(
-            "unread_chat"
-          ) || 0
-        )
-
-      setUnreadChat(
-        latest
-      )
+    () => {
+      fetchBadgeData()
     }
 
-    const updateAdminBadge =
-      () => {
+  const updateAdminBadge =
+    () => {
+      fetchBadgeData()
+    }
 
-      const latest =
-        Number(
-          localStorage.getItem(
-            "unread_admin_chat"
-          ) || 0
-        )
-
-      setUnreadAdminChat(
-        latest
-      )
+  const updateNotificationBadge =
+    () => {
+      fetchBadgeData()
     }
 
     window.addEventListener(
@@ -222,6 +146,10 @@ export default function Sidebar({
     window.addEventListener(
       "admin_chat_notification",
       updateAdminBadge
+    )
+    window.addEventListener(
+      "notifications_changed",
+      updateNotificationBadge
     )
 
     return () => {
@@ -234,6 +162,11 @@ export default function Sidebar({
       window.removeEventListener(
         "admin_chat_notification",
         updateAdminBadge
+      )
+
+      window.removeEventListener(
+        "notifications_changed",
+        updateNotificationBadge
       )
     }
 

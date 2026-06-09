@@ -140,9 +140,12 @@ useEffect(() => {
           },
         }
       )
-
+      window.dispatchEvent(
+        new Event(
+          "notifications_changed"
+        )
+      )
       alert("Laporan berhasil dibuat")
-
       router.push("/user/dashboard")
     } catch (error) {
       console.log(error)
