@@ -26,10 +26,6 @@ export default function Sidebar({
   setUnreadChat] =
   useState(0)
 
-  const [unreadAdminChat,
-  setUnreadAdminChat] =
-  useState(0)
-
   useEffect(() => {
 
    const fetchBadgeData =
@@ -45,76 +41,60 @@ export default function Sidebar({
       if (!token) return
 
       // USER
-      if (role === "user") {
+          if (role === "user") {
 
-        const response =
-          await api.get(
-            "/notifications",
-            {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
-            }
-          )
+            const response =
+              await api.get(
+                "/notifications",
+                {
+                  headers: {
+                    Authorization:
+                      `Bearer ${token}`,
+                  },
+                }
+              )
 
-        const unread =
-          response.data.filter(
-            (item) =>
-              !item.is_read
-          ).length
+            const unread =
+              response.data.filter(
+                (item) =>
+                  !item.is_read
+              ).length
 
-        setUnreadNotif(
-          unread
-        )
+            setUnreadNotif(
+              unread
+            )
 
-        return
-      }
+            return
+          }
 
       // ADMIN & SUPERADMIN
-      if (
-        role === "admin" ||
-        role === "superadmin"
-      ) {
+      if (role === "admin") {
 
-        const response =
-          await api.get(
-            "/chat/unread",
-            {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
-            }
-          )
+      const response =
+        await api.get(
+          "/chat/unread",
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        )
 
-        const totalUnread =
-          response.data.reduce(
-            (total, item) =>
-              total +
-              Number(
-                item.unread_count || 0
-              ),
-            0
-          )
+      const totalUnread =
+        response.data.reduce(
+          (total, item) =>
+            total +
+            Number(
+              item.unread_count || 0
+            ),
+          0
+        )
 
-        if (role === "admin") {
-
-          setUnreadChat(
-            totalUnread
-          )
-        }
-
-        if (
-          role ===
-          "superadmin"
-        ) {
-
-          setUnreadAdminChat(
-            totalUnread
-          )
-        }
-      }
+      setUnreadChat(
+        totalUnread
+      )
+    }
       fetchBadgeData()
 
     } catch (error) {
@@ -124,11 +104,6 @@ export default function Sidebar({
   }
 
     const updateChatBadge =
-    () => {
-      fetchBadgeData()
-    }
-
-  const updateAdminBadge =
     () => {
       fetchBadgeData()
     }
@@ -144,10 +119,6 @@ export default function Sidebar({
     )
 
     window.addEventListener(
-      "admin_chat_notification",
-      updateAdminBadge
-    )
-    window.addEventListener(
       "notifications_changed",
       updateNotificationBadge
     )
@@ -157,11 +128,6 @@ export default function Sidebar({
       window.removeEventListener(
         "chat_notification",
         updateChatBadge
-      )
-
-      window.removeEventListener(
-        "admin_chat_notification",
-        updateAdminBadge
       )
 
       window.removeEventListener(
@@ -289,36 +255,6 @@ export default function Sidebar({
                       >
                         {
                           unreadChat
-                        }
-                      </span>
-                    )}
-
-                    {/* SUPERADMIN */}
-                    {menu.name ===
-                      "Kelola Admin" &&
-                      unreadAdminChat >
-                        0 && (
-
-                      <span
-                        className="
-                          absolute
-                          -top-2
-                          -right-3
-                          min-w-[20px]
-                          h-[20px]
-                          px-1
-                          rounded-full
-                          bg-red-500
-                          text-white
-                          text-[10px]
-                          font-bold
-                          flex
-                          items-center
-                          justify-center
-                        "
-                      >
-                        {
-                          unreadAdminChat
                         }
                       </span>
                     )}

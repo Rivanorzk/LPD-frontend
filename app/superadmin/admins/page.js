@@ -56,33 +56,6 @@ export default function ManageAdminPage() {
         filteredAdmins
       )
 
-      const totalUnread =
-        filteredAdmins.reduce(
-          (total, admin) =>
-            total +
-            Number(
-              admin.unread_count ||
-              0
-            ),
-          0
-        )
-
-      localStorage.setItem(
-        "unread_admin_chat",
-        totalUnread
-      )
-
-      window.dispatchEvent(
-        new Event(
-          "admin_chat_notification"
-        )
-      )
-
-      console.log(
-        "totalUnread:",
-        totalUnread
-      )
-
     } catch (error) {
 
       console.log(error)
