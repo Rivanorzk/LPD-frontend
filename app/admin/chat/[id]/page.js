@@ -90,34 +90,31 @@ useEffect(() => {
     }
 
   const markAsRead =
-    async () => {
+  async () => {
 
-      try {
+    try {
 
-        const token =
-          localStorage.getItem("token")
-
-        await api.patch(
-          `/chat/read/${params.id}`,
-          {},
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
-          }
+      const token =
+        localStorage.getItem(
+          "token"
         )
 
-        window.dispatchEvent(
-          new Event(
-            "chat_notification"
-          )
-        )
+      await api.patch(
+        `/chat/read/${params.id}`,
+        {},
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      )
 
-      } catch (error) {
-        console.log(error)
-      }
+    } catch (error) {
+
+      console.log(error)
     }
+  }
 
     if (params.id) {
 
@@ -138,7 +135,7 @@ useEffect(() => {
   )
 
     const handleReceiveMessage =
-  (data) => {
+    async (data) => {
 
     const isCurrentChat =
       (
@@ -189,7 +186,7 @@ useEffect(() => {
       Number(params.id)
     ) {
 
-      api.patch(
+      await api.patch(
         `/chat/read/${params.id}`,
         {},
         {
@@ -202,12 +199,6 @@ useEffect(() => {
               }`,
           },
         }
-      )
-
-      window.dispatchEvent(
-        new Event(
-          "chat_notification"
-        )
       )
     }
   }
