@@ -586,7 +586,7 @@ export default function ReportsPage() {
 
       <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
 
-        <div className="bg-white w-full max-w-3xl rounded-[32px] p-5 lg:p-8 relative overflow-y-auto max-h-[90vh]">
+        <div className="bg-white w-full max-w-3xl rounded-[32px] p-5 lg:p-8 relative overflow-y-auto max-h-[90vh] no-scrollbar">
 
           <button
             onClick={() =>
